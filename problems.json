@@ -1,7 +1,7 @@
 [
   {
     "id": "problem-1",
-    "question": "Solve for \\( x \\): \\( \\frac{2}{3}x + 5 = 9 \\)",
+    "title": "Solve for \\( x \\): \\( \\frac{2}{3}x + 5 = 9 \\)",
     "steps": [
       "1) \\( \\frac{2}{3}x = 4 \\)",
       "2) \\( x = \\frac{4}{\\frac{2}{3}} \\)",
