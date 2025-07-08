@@ -118,6 +118,10 @@
         ? '✅ Correct!'
         : '❌ Incorrect. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+
 
       document.querySelector('#nextBtn').style.display = 'inline-block';
     }
