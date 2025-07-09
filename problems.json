@@ -7,27 +7,30 @@
     <style>
         body {
             margin: 0;
+            padding: 20px;
             background-color: #0e0e0e;
             color: #f8f8f8;
             font-family: Arial, sans-serif;
-            padding: 20px;
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         h1 {
             color: #ffdd00;
             text-align: center;
+            margin-bottom: 30px;
         }
         .problem {
             background: #1a1a1a;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 1.2em;
+            text-align: center;
         }
         .step {
             background: #1a1a1a;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             margin-bottom: 10px;
             cursor: pointer;
@@ -46,45 +49,78 @@
             background: #331a1a;
         }
         .explanation {
-            padding: 12px;
+            padding: 15px;
             background: #252525;
             border-radius: 8px;
-            margin-top: 15px;
+            margin-top: 20px;
             display: none;
+            animation: fadeIn 0.5s;
         }
         #nextBtn {
             background: #ffdd00;
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            display: none;
+            margin: 30px auto 0;
+            display: block;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        #nextBtn:hover {
+            background: #ffe966;
+            transform: translateY(-2px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .level-indicator {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #aaa;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
     <h1>Mistake Seeker</h1>
     <div id="content"></div>
-    <button id="nextBtn">Next Problem</button>
+    <button id="nextBtn" style="display: none;">Next Problem</button>
 
     <script>
-        // Sample data - REPLACE THIS WITH YOUR ACTUAL JSON LOADING CODE
+        // ALL PROBLEMS EMBEDDED DIRECTLY IN THE CODE
         const levels = [
             {
-                "problem": "$$\\frac{3}{x+1} = 6$$",
-                "steps": [
-                    "\\(\\frac{3}{x+1} = 6\\) (Pradinė lygtis)",
-                    "\\(3 = 6(x + 1)\\) (Dauginame abi puses iš x + 1)",
-                    "\\(3 = 6x + 6\\) (Išskleidžiame dešinę pusę)",
-                    "\\(3 - 6 = 6x\\) (Atimame 6 iš abiejų pusių)",
-                    "\\(-3 = 6x\\) (Sumažiname kairę pusę)",
-                    "\\(x = -\\frac{1}{2}\\) (Padaliname abi puses iš 6)"
+                level: 1,
+                problem: "$$\\frac{3}{x+1} = 6$$",
+                steps: [
+                    "\\(\\frac{3}{x+1} = 6\\) (Initial equation)",
+                    "\\(3 = 6(x + 1)\\) (Multiply both sides by x + 1)",
+                    "\\(3 = 6x + 6\\) (Expand right side)",
+                    "\\(3 - 6 = 6x\\) (Subtract 6 from both sides)",
+                    "\\(-3 = 6x\\) (Simplify left side)",
+                    "\\(x = -\\frac{1}{2}\\) (Divide both sides by 6)"
                 ],
-                "mistakeStep": null,
-                "explanation": "Šioje lygtyje klaidų nėra"
+                mistakeStep: null,
+                explanation: "No mistakes in this solution - all steps are correct."
+            },
+            {
+                level: 2,
+                problem: "$$\\frac{2}{x} + \\frac{3}{x+1} = 1$$",
+                steps: [
+                    "\\(\\frac{2}{x} + \\frac{3}{x+1} = 1\\) (Initial equation)",
+                    "\\(\\frac{2(x+1) + 3x}{x(x+1)} = 1\\) (Common denominator)",
+                    "\\(\\frac{2x + 2 + 3x}{x(x+1)} = 1\\) (Expand numerator)",
+                    "\\(\\frac{5x + 2}{x(x+1)} = 1\\) (Combine like terms)",
+                    "\\(5x + 2 = x(x+1)\\) (Multiply both sides by denominator)",
+                    "\\(5x + 2 = x^2 + x\\) (Expand right side)",
+                    "\\(x^2 - 4x - 2 = 0\\) (Bring all terms to one side)"
+                ],
+                mistakeStep: null,
+                explanation: "This solution is completely correct with no errors."
             }
         ];
 
@@ -92,18 +128,31 @@
         let clickable = false;
 
         function renderLevel() {
+            if (currentLevel >= levels.length) {
+                document.getElementById('content').innerHTML = '<div class="problem">🎉 You completed all problems!</div>';
+                document.getElementById('nextBtn').style.display = 'none';
+                return;
+            }
+
             const level = levels[currentLevel];
-            document.getElementById('content').innerHTML = `
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="level-indicator">Level ${level.level}</div>
                 <div class="problem">${level.problem}</div>
                 ${level.steps.map((step, i) => `
-                    <div class="step" onclick="checkStep(${i})">
-                        ${step}
+                    <div class="step" id="step-${i}">
+                        <strong>${i+1}:</strong> ${step}) 
                     </div>
                 `).join('')}
                 <div class="explanation" id="explanation"></div>
             `;
-            
-            // Process math after rendering
+
+            // Add event listeners
+            level.steps.forEach((_, i) => {
+                document.getElementById(`step-${i}`).addEventListener('click', () => checkStep(i));
+            });
+
+            // Process math
             if (window.MathJax) {
                 MathJax.typesetPromise().then(() => {
                     clickable = true;
@@ -115,39 +164,44 @@
             if (!clickable) return;
             
             const level = levels[currentLevel];
-            const steps = document.querySelectorAll('.step');
             const explanation = document.getElementById('explanation');
             
-            steps.forEach(step => step.onclick = null);
+            // Disable further clicks
+            clickable = false;
             
-            if (level.mistakeStep === stepIndex) {
-                steps[stepIndex].classList.add('correct');
-                explanation.innerHTML = '✅ Correct! ' + level.explanation;
-            } else {
-                steps[stepIndex].classList.add('wrong');
-                explanation.innerHTML = '❌ Incorrect. ' + level.explanation;
-            }
+            // Highlight the selected step
+            document.querySelectorAll('.step').forEach((step, i) => {
+                step.style.cursor = 'default';
+                if (i === level.mistakeStep) {
+                    step.classList.add('correct');
+                }
+                if (i === stepIndex && i !== level.mistakeStep) {
+                    step.classList.add('wrong');
+                }
+            });
             
+            // Show explanation
+            explanation.innerHTML = (stepIndex === level.mistakeStep) 
+                ? '✅ <strong>Correct!</strong> ' + level.explanation
+                : '❌ <strong>Incorrect.</strong> ' + level.explanation;
             explanation.style.display = 'block';
-            document.getElementById('nextBtn').style.display = 'inline-block';
             
+            // Show next button
+            document.getElementById('nextBtn').style.display = 'block';
+            
+            // Re-process math
             if (window.MathJax) {
                 MathJax.typesetPromise();
             }
         }
 
-        document.getElementById('nextBtn').onclick = function() {
+        document.getElementById('nextBtn').addEventListener('click', () => {
             currentLevel++;
-            if (currentLevel >= levels.length) {
-                document.getElementById('content').innerHTML = '<h2>All problems completed!</h2>';
-                this.style.display = 'none';
-            } else {
-                renderLevel();
-                this.style.display = 'none';
-            }
-        };
+            document.getElementById('nextBtn').style.display = 'none';
+            renderLevel();
+        });
 
-        // Initialize MathJax and start
+        // MathJax configuration
         window.MathJax = {
             tex: {
                 inlineMath: [['\\(', '\\)']],
