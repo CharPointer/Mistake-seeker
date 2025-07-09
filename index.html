@@ -1,4 +1,98 @@
-[
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistake Seeker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0e0e0e;
+            color: #f8f8f8;
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #ffdd00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .problem {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .step {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+        .step:hover {
+            background: #252525;
+        }
+        .correct {
+            border-left-color: #00cc66;
+            background: #1a331a;
+        }
+        .wrong {
+            border-left-color: #cc0033;
+            background: #331a1a;
+        }
+        .explanation {
+            padding: 15px;
+            background: #252525;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        #nextBtn {
+            background: #ffdd00;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 30px auto 0;
+            display: block;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        #nextBtn:hover {
+            background: #ffe966;
+            transform: translateY(-2px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .level-indicator {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #aaa;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mistake Seeker</h1>
+    <div id="content"></div>
+    <button id="nextBtn" style="display: none;">Next Problem</button>
+
+    <script>
+        // ALL PROBLEMS EMBEDDED DIRECTLY IN THE CODE
+        const levels = [
   {
     "level": 1,
     "problem": "$$ \\frac{2}{x-3} = 5 $$",
@@ -69,4 +163,106 @@
     "mistakeStep": 5,
     "explanation": "Klaida 6 žingsnyje: neteisingas galutinis atsakymas. Teisingai: $$ x = -3 $$"
   }
-]
+];
+
+        let currentLevel = 0;
+        let clickable = false;
+
+        function renderLevel() {
+            if (currentLevel >= levels.length) {
+                document.getElementById('content').innerHTML = '<div class="problem">🎉 You completed all problems!</div>';
+                document.getElementById('nextBtn').style.display = 'none';
+                return;
+            }
+
+            const level = levels[currentLevel];
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="level-indicator">Level ${level.level}</div>
+                <div class="problem">${level.problem}</div>
+                ${level.steps.map((step, i) => `
+                    <div class="step" id="step-${i}">
+                        <strong>${i+1}:</strong> ${step}) 
+                    </div>
+                `).join('')}
+                <div class="explanation" id="explanation"></div>
+            `;
+
+            // Add event listeners
+            level.steps.forEach((_, i) => {
+                document.getElementById(`step-${i}`).addEventListener('click', () => checkStep(i));
+            });
+
+            // Process math
+            if (window.MathJax) {
+                MathJax.typesetPromise().then(() => {
+                    clickable = true;
+                });
+            }
+        }
+
+        function checkStep(stepIndex) {
+            if (!clickable) return;
+            
+            const level = levels[currentLevel];
+            const explanation = document.getElementById('explanation');
+            
+            // Disable further clicks
+            clickable = false;
+            
+            // Highlight the selected step
+            document.querySelectorAll('.step').forEach((step, i) => {
+                step.style.cursor = 'default';
+                if (i === level.mistakeStep) {
+                    step.classList.add('correct');
+                }
+                if (i === stepIndex && i !== level.mistakeStep) {
+                    step.classList.add('wrong');
+                }
+            });
+            
+            // Show explanation
+            explanation.innerHTML = (stepIndex === level.mistakeStep) 
+                ? '✅ <strong>Correct!</strong> ' + level.explanation
+                : '❌ <strong>Incorrect.</strong> ' + level.explanation;
+            explanation.style.display = 'block';
+            
+            // Show next button
+            document.getElementById('nextBtn').style.display = 'block';
+            
+            // Re-process math
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentLevel++;
+            document.getElementById('nextBtn').style.display = 'none';
+            renderLevel();
+        });
+
+        // MathJax configuration
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            startup: {
+                pageReady: () => {
+                    return MathJax.startup.defaultPageReady().then(() => {
+                        renderLevel();
+                    });
+                }
+            }
+        };
+
+        // Load MathJax
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>
