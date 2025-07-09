@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mistake Seeker</title>
   <style>
     body {
@@ -14,22 +14,26 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem;
+      font-size: 1.4rem;
     }
     h1 {
       color: #ffdd00;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
     }
     .problem {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin-bottom: 2rem;
+      max-width: 700px;
+      text-align: center;
     }
     .step {
       background-color: #1a1a1a;
       border-radius: 8px;
-      padding: 1rem;
+      padding: 1.2rem;
       margin-bottom: 1rem;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
       transition: background-color 0.3s;
       cursor: pointer;
     }
@@ -43,16 +47,16 @@
       border-left: 6px solid #cc0033;
     }
     .explanation {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
       font-style: italic;
       color: #ccc;
-      max-width: 600px;
+      max-width: 700px;
     }
     .next-btn {
       margin-top: 2rem;
       background: #ffdd00;
       color: #000;
-      padding: 0.7rem 1.2rem;
+      padding: 0.8rem 1.4rem;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -96,9 +100,9 @@
       setTimeout(() => {
         clickable = true;
         document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 10000); // 10s delay
+      }, 10000);
 
-      MathJax.typeset(); // render LaTeX
+      if (window.MathJax) MathJax.typesetPromise();
     }
 
     function handleClick(index, el, level) {
@@ -114,14 +118,12 @@
 
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
-      explanation.textContent = (index === level.mistakeStep)
+      explanation.innerHTML = (index === level.mistakeStep)
         ? '✅ Correct!'
         : '❌ Incorrect. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
-      if (window.MathJax) {
-        MathJax.typesetPromise();
-      }
 
+      if (window.MathJax) MathJax.typesetPromise();
 
       document.querySelector('#nextBtn').style.display = 'inline-block';
     }
@@ -141,7 +143,7 @@
   </script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
 </head>
 <body>
