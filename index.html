@@ -14,26 +14,26 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
     }
     h1 {
       color: #ffdd00;
       margin-bottom: 2rem;
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
     .problem {
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       margin-bottom: 2rem;
-      max-width: 700px;
+      max-width: 800px;
       text-align: center;
     }
     .step {
       background-color: #1a1a1a;
       border-radius: 8px;
-      padding: 1.2rem;
-      margin-bottom: 1rem;
+      padding: 1.4rem;
+      margin-bottom: 1.2rem;
       width: 100%;
-      max-width: 700px;
+      max-width: 800px;
       transition: background-color 0.3s;
       cursor: pointer;
     }
@@ -47,16 +47,16 @@
       border-left: 6px solid #cc0033;
     }
     .explanation {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       font-style: italic;
       color: #ccc;
-      max-width: 700px;
+      max-width: 800px;
     }
     .next-btn {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       background: #ffdd00;
       color: #000;
-      padding: 0.8rem 1.4rem;
+      padding: 1rem 1.6rem;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -86,13 +86,13 @@
 
       const probDiv = document.createElement('div');
       probDiv.className = 'problem';
-      probDiv.innerHTML = level.problem;
+      probDiv.innerHTML = `$$${level.problem}$$`;
       container.appendChild(probDiv);
 
       level.steps.forEach((stepText, i) => {
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step';
-        stepDiv.innerHTML = `<b>${i + 1})</b> ${stepText}`;
+        stepDiv.innerHTML = `<b>${i + 1})</b> $$${stepText}$$`;
         stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
         container.appendChild(stepDiv);
       });
@@ -119,8 +119,8 @@
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
       explanation.innerHTML = (index === level.mistakeStep)
-        ? '✅ Correct!'
-        : '❌ Incorrect. ' + level.explanation;
+        ? '✅ Teisingai!'
+        : '❌ Neteisinga. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
 
       if (window.MathJax) MathJax.typesetPromise();
@@ -134,14 +134,24 @@
         document.querySelector('#nextBtn').style.display = 'none';
         showLevel();
       } else {
-        document.querySelector('#content').innerHTML = '<h2>🎉 You’ve finished all problems!</h2>';
+        document.querySelector('#content').innerHTML = '<h2>🎉 Tu įveikei visas užduotis!</h2>';
         document.querySelector('#nextBtn').style.display = 'none';
       }
     }
 
     window.onload = loadProblems;
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
   <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
@@ -149,6 +159,6 @@
 <body>
   <h1>Mistake Seeker</h1>
   <div id="content"></div>
-  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
+  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Kitas</button>
 </body>
 </html>
