@@ -64,15 +64,71 @@
       display: none;
     }
   </style>
+</head>
+<body>
+  <h1>Mistake Seeker</h1>
+  <div id="content"></div>
+  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
+
   <script>
-    let levels = [];
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      startup: {
+        ready: () => {
+          MathJax.startup.defaultReady();
+          initializeApp();
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    const levels = [
+      {
+        problem: "Find the derivative of $f(x) = x^3 + 2x^2 - 5x + 1$",
+        steps: [
+          "$f'(x) = 3x^2 + 4x - 5$",
+          "$f'(x) = 3x^2 + 2x - 5$",
+          "$f'(x) = 3x^2 + 4x - 1$",
+          "$f'(x) = x^2 + 4x - 5$"
+        ],
+        mistakeStep: 1,
+        explanation: "The derivative of $2x^2$ is $4x$, not $2x$. So the correct answer is $f'(x) = 3x^2 + 4x - 5$."
+      },
+      {
+        problem: "Solve for x: $\\frac{x+3}{x-1} = 2$",
+        steps: [
+          "Cross multiply: $x + 3 = 2(x - 1)$",
+          "Expand: $x + 3 = 2x - 2$",
+          "Rearrange: $3 + 2 = 2x - x$",
+          "Therefore: $x = 5$"
+        ],
+        mistakeStep: 3,
+        explanation: "All steps are correct. The solution is indeed $x = 5$."
+      },
+      {
+        problem: "What is $\\int x^2 dx$?",
+        steps: [
+          "$\\int x^2 dx = \\frac{x^3}{3} + C$",
+          "$\\int x^2 dx = \\frac{x^3}{2} + C$",
+          "$\\int x^2 dx = x^3 + C$",
+          "$\\int x^2 dx = 2x^3 + C$"
+        ],
+        mistakeStep: 0,
+        explanation: "The power rule for integration: $\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$"
+      }
+    ];
+
     let currentLevel = 0;
     let clickable = false;
     let clicked = false;
 
-    async function loadProblems() {
-      const res = await fetch('problems.json');
-      levels = await res.json();
+    function initializeApp() {
       showLevel();
     }
 
@@ -97,12 +153,13 @@
         container.appendChild(stepDiv);
       });
 
-      setTimeout(() => {
-        clickable = true;
-        document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 10000);
-
-      if (window.MathJax) MathJax.typesetPromise();
+      // Render math and then enable clicking
+      MathJax.typesetPromise([container]).then(() => {
+        setTimeout(() => {
+          clickable = true;
+          document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
+        }, 1000);
+      });
     }
 
     function handleClick(index, el, level) {
@@ -123,8 +180,7 @@
         : '❌ Incorrect. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
 
-      if (window.MathJax) MathJax.typesetPromise();
-
+      MathJax.typesetPromise([explanation]);
       document.querySelector('#nextBtn').style.display = 'inline-block';
     }
 
@@ -134,21 +190,10 @@
         document.querySelector('#nextBtn').style.display = 'none';
         showLevel();
       } else {
-        document.querySelector('#content').innerHTML = '<h2>🎉 You’ve finished all problems!</h2>';
+        document.querySelector('#content').innerHTML = '<h2>🎉 You have finished all problems!</h2>';
         document.querySelector('#nextBtn').style.display = 'none';
       }
     }
-
-    window.onload = loadProblems;
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
-</head>
-<body>
-  <h1>Mistake Seeker</h1>
-  <div id="content"></div>
-  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
 </body>
 </html>
