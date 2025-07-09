@@ -3,12 +3,12 @@
     "level": 1,
     "problem": "$$ \\frac{3}{x+1} = 6 $$",
     "steps": [
-      "\\frac{3}{x+1} = 6 (Pradinė lygtis)",
-      "3 = 6(x+1) (Dauginame abi puses iš x + 1)",
+      "𝑓(3 / (x + 1) = 6) (Pradinė lygtis)",
+      "3 = 6(x + 1) (Dauginame abi puses iš x + 1)",
       "3 = 6x + 6 (Išskleidžiame dešinę pusę)",
       "3 - 6 = 6x (Atimame 6 iš abiejų pusių)",
       "-3 = 6x (Sumažiname kairę pusę)",
-      "x = -\\frac{1}{2} (Padaliname abi puses iš 6)"
+      "x = -1/2 (Padaliname abi puses iš 6)"
     ],
     "mistakeStep": null,
     "explanation": "Šioje lygtyje klaidų nėra – visi veiksmai atlikti teisingai."
@@ -33,7 +33,7 @@
     "problem": "$$ \\frac{3x}{x-2} = 6 $$",
     "steps": [
       "\\frac{3x}{x-2} = 6 (Pradinė lygtis)",
-      "3x = 6(x-2) (Dauginame abi puses iš x - 2)",
+      "3x = 6(x - 2) (Dauginame abi puses iš x - 2)",
       "3x = 6x - 12 (Išskleidžiame dešinę pusę)",
       "3x - 6x = -12 (Atimame 6x iš abiejų pusių)",
       "-3x = -12 (Sujungiame narius)",
@@ -47,7 +47,7 @@
     "problem": "$$ \\frac{2x+1}{x-1} = \\frac{4}{x+2} $$",
     "steps": [
       "\\frac{2x+1}{x-1} = \\frac{4}{x+2} (Pradinė lygtis)",
-      "(2x+1)(x+2) = 4(x-1) (Dauginame kryžmai)",
+      "(2x+1)(x+2) = 4(x - 1) (Dauginame kryžmai)",
       "2x^2 + 4x + x + 2 = 4x - 4 (Išskleidžiame abi puses)",
       "2x^2 + 5x + 2 = 4x - 4 (Sujungiame narius)",
       "2x^2 + x + 6 = 0 (Perkeliame viską į vieną pusę)"
@@ -61,7 +61,7 @@
     "steps": [
       "\\frac{x+2}{x^2 - 4} = \\frac{1}{x - 2} (Pradinė lygtis)",
       "x^2 - 4 = (x - 2)(x + 2) (Suskaldome vardiklį kairėje pusėje)",
-      "\\frac{1}{(x - 2)} = \\frac{1}{(x - 2)} (Supaprastiname trupmeną kairėje pusėje)",
+      "\\frac{1}{x - 2} = \\frac{1}{x - 2} (Supaprastiname trupmeną kairėje pusėje)",
       "Lygtis visada teisinga, kai x ≠ ±2 (Patikriname apibrėžimo sritį)"
     ],
     "mistakeStep": null,
@@ -72,10 +72,10 @@
     "problem": "$$ \\frac{1}{x} + \\frac{2}{x+1} = \\frac{3}{x^2+x} $$",
     "steps": [
       "\\frac{1}{x} + \\frac{2}{x+1} = \\frac{3}{x(x+1)} (Suvienodiname vardiklius)",
-      "\\frac{(x+1) + 2x}{x(x+1)} = \\frac{3}{x(x+1)} (Sudėtis su bendru vardikliu)",
+      "\\frac{x+1 + 2x}{x(x+1)} = \\frac{3}{x(x+1)} (Sudėtis su bendru vardikliu)",
       "\\frac{3x + 1}{x(x+1)} = \\frac{3}{x(x+1)} (Sujungiame narius)",
       "3x + 1 = 3 (Sulyginame skaitiklius)",
-      "x = \\frac{2}{3} (Išsprendžiame lygtį)"
+      "x = 2/3 (Išsprendžiame lygtį)"
     ],
     "mistakeStep": null,
     "explanation": "Šioje lygtyje klaidų nėra – visos manipuliacijos atliktos teisingai."
@@ -90,7 +90,7 @@
       "\\frac{3x - 3}{(x-3)(x+3)} = \\frac{5x}{(x-3)(x+3)} (Sujungiame skaitiklius)",
       "3x - 3 = 5x (Sulyginame skaitiklius)",
       "-3 = 2x (Perkeliame narius)",
-      "x = -\\frac{3}{2} (Išsprendžiame lygtį)"
+      "x = -3/2 (Išsprendžiame lygtį)"
     ],
     "mistakeStep": null,
     "explanation": "Šioje lygtyje klaidų nėra – visi veiksmai atlikti logiškai ir teisingai."
