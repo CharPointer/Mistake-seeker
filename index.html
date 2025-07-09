@@ -94,57 +94,134 @@
         const levels = [
   {
     "level": 1,
-    "problem": "$$ \\frac{3}{x-2} - \\frac{1}{x+1} = \\frac{2}{x-2} $$",
+    "problem": "$$ \\frac{x+4}{x} = 0 $$",
     "steps": [
-      "$$ \\frac{3}{x-2} - \\frac{1}{x+1} = \\frac{2}{x-2} $$ (Pradinė lygtis)",
-      "$$ \\frac{3}{x-2} - \\frac{1}{x+1} - \\frac{2}{x-2} = 0 $$ (Perkeliame viską į kairę pusę)",
-      "$$ \\frac{3-2}{x-2} - \\frac{1}{x+1} = 0 $$ (Sudedame trupmenas su vienodais vardikliais)",
-      "$$ \\frac{1}{x-2} - \\frac{1}{x+1} = 0 $$ (Supaprastiname)",
-      "$$ \\frac{1(x+1) - 1(x-2)}{(x-2)(x+1)} = 0 $$ (Praplečiame iki bendro vardiklio)",
-      "$$ \\frac{x+1 - x + 2}{(x-2)(x+1)} = 0 $$ (Išskleidžiame skaitiklį)",
-      "$$ \\frac{3}{(x-2)(x+1)} = 0 $$ (Supaprastiname skaitiklį)",
-      "$$ 3 = 0 $$ (Skaitiklis turi būti lygus nuliui)",
-      "$$ \\text{Sprendinio nėra} $$ (Prieštaravimas)"
+      "$$ x + 4 = 0 $$ (Lygtis pertvarkyta, prilyginame skaitiklį nuliui)",
+      "$$ x = 4 $$ (Atimame 4 iš abiejų lygties pusių)",
+      "$$ x \\neq 0 $$ (Randame apibrėžimo sritį)",
+      "$$ x = 4 $$ (Atsakymas)"
     ],
-    "mistakeStep": 5,
-    "explanation": "Klaida šeštame žingsnyje: neteisingai atimdama. Teisingai: $$ x + 1 - x + 2 = 3 $$ (ne $x + 1 - x - 2 = -1$). Bet rezultatas vis tiek tas pats - sprendinio nėra, nes $$ \\frac{3}{(x-2)(x+1)} = 0 $$ neįmanoma."
+    "mistakeStep": 2,
+    "explanation": "Klaida 2 žingsnyje: atėmus 4, dešinėje pusėje turi būti $$ -4 $$, o ne $$ 4 $$"
   },
   {
     "level": 2,
-    "problem": "$$ \\frac{2}{x+1} + \\frac{3}{x-1} = \\frac{1}{x+1} $$",
+    "problem": "$$ \\frac{x^2}{x+1} = 0 $$",
     "steps": [
-      "$$ \\frac{2}{x+1} + \\frac{3}{x-1} = \\frac{1}{x+1} $$ (Pradinė lygtis)",
-      "$$ \\frac{2}{x+1} + \\frac{3}{x-1} - \\frac{1}{x+1} = 0 $$ (Perkeliame viską į kairę pusę)",
-      "$$ \\frac{2-1}{x+1} + \\frac{3}{x-1} = 0 $$ (Sudedame trupmenas su vienodais vardikliais)",
-      "$$ \\frac{1}{x+1} + \\frac{3}{x-1} = 0 $$ (Supaprastiname)",
-      "$$ \\frac{1(x-1) + 3(x+1)}{(x+1)(x-1)} = 0 $$ (Praplečiame iki bendro vardiklio)",
-      "$$ \\frac{x-1 + 3x + 3}{(x+1)(x-1)} = 0 $$ (Išskleidžiame skaitiklį)",
-      "$$ \\frac{4x + 2}{(x+1)(x-1)} = 0 $$ (Supaprastiname skaitiklį)",
-      "$$ 4x + 2 = 0 $$ (Skaitiklis turi būti lygus nuliui)",
-      "$$ 4x = -2 $$ (Atimame 2 iš abiejų pusių)",
-      "$$ x = -\\frac{2}{4} = -\\frac{1}{2} $$ (Dalijame iš 4)"
+      "$$ x^2 = 0 $$ (Lygtis pertvarkyta, prilyginame skaitiklį nuliui)",
+      "$$ x = 0 $$ (Ištraukiame šaknį iš abiejų lygties pusių)",
+      "$$ x+1 \\neq 0, \\; x \\neq -1 $$ (Randame apibrėžimo sritį)",
+      "$$ x = -1 $$ (Atsakymas)"
     ],
-    "mistakeStep": 8,
-    "explanation": "Klaida devintame žingsnyje: neteisingai perkelta. Teisingai: $$ 4x + 2 = 0 $$ → $$ 4x = -2 $$ → $$ x = -\\frac{1}{2} $$. Patikrinimas: $x = -\\frac{1}{2} \\neq -1$ ir $x = -\\frac{1}{2} \\neq 1$, todėl sprendinys tinkamas."
+    "mistakeStep": 4,
+    "explanation": "Klaida 4 žingsnyje: atsakymas turėjo būti $$ x = 0 $$, o ne $$ -1 $$. $$ -1 $$ yra skaičius, nepriklausantis apibrėžimo sričiai."
   },
   {
     "level": 3,
-    "problem": "$$ \\frac{x}{x-3} - \\frac{2}{x+2} = \\frac{1}{x-3} $$",
+    "problem": "$$ \\frac{1}{x} = x $$",
     "steps": [
-      "$$ \\frac{x}{x-3} - \\frac{2}{x+2} = \\frac{1}{x-3} $$ (Pradinė lygtis)",
-      "$$ \\frac{x}{x-3} - \\frac{2}{x+2} - \\frac{1}{x-3} = 0 $$ (Perkeliame viską į kairę pusę)",
-      "$$ \\frac{x-1}{x-3} - \\frac{2}{x+2} = 0 $$ (Sudedame trupmenas su vienodais vardikliais)",
-      "$$ \\frac{(x-1)(x+2) - 2(x-3)}{(x-3)(x+2)} = 0 $$ (Praplečiame iki bendro vardiklio)",
-      "$$ \\frac{x^2 + 2x - x - 2 - 2x + 6}{(x-3)(x+2)} = 0 $$ (Išskleidžiame skaitiklį)",
-      "$$ \\frac{x^2 - x + 4}{(x-3)(x+2)} = 0 $$ (Supaprastiname skaitiklį)",
-      "$$ x^2 - x + 4 = 0 $$ (Skaitiklis turi būti lygus nuliui)",
-      "$$ x = \\frac{1 \\pm \\sqrt{1 - 16}}{2} = \\frac{1 \\pm \\sqrt{-15}}{2} $$ (Kvadratinė formulė)",
-      "$$ \\text{Sprendinio nėra} $$ (Diskriminantas neigiamas)"
+      "$$ \\frac{1}{x} - x = 0 $$ (Perkeliame $$ x $$ į kitą pusę)",
+      "$$ \\frac{1 - x^2}{x} = 0 $$ (Bendravardikliname)",
+      "$$ 1 - x^2 = 0 $$ (Lygtis pertvarkyta, skaitiklį prilyginame nuliui)",
+      "$$ 1 = x^2 $$ (Perkeliame $$ x^2 $$ į kairę pusę)",
+      "$$ x = -1 $$ (Ištraukiame šaknį)",
+      "$$ x \\neq 0 $$ (Randame apibrėžimo sritį)",
+      "$$ x = -1 $$ (Atsakymas)"
+    ],
+    "mistakeStep": 5,
+    "explanation": "Klaida 5 žingsnyje: ištraukus šaknį turėjo gautis $$ x = \\pm 1 $$ – ne tik $$ x = -1 $$"
+  },
+  {
+    "level": 4,
+    "problem": "$$ \\frac{1}{x} + \\frac{2}{x} = \\frac{3}{x} $$",
+    "steps": [
+      "$$ \\frac{1}{x} + \\frac{2}{x} - \\frac{3}{x} = 0 $$ (Perkeliame $$ \\frac{3}{x} $$ į kairę pusę)",
+      "$$ \\frac{1 + 2 - 3}{x} = 0 $$ (Bendravardikliname)",
+      "$$ \\frac{0}{x} = 0 $$ (Lygtis pertvarkyta, prilyginame skaitiklį nuliui)",
+      "$$ 0 = 0 $$",
+      "$$ x \\in \\mathbb{R} $$ (Atsakymas)"
     ],
     "mistakeStep": 4,
-    "explanation": "Klaida penktame žingsnyje: neteisingai išskleista $(x-1)(x+2)$. Teisingai: $$ (x-1)(x+2) = x^2 + 2x - x - 2 = x^2 + x - 2 $$. Tačiau galutinis rezultatas vis tiek tas pats - sprendinio nėra."
+    "explanation": "Klaida 4 žingsnyje: pamiršta patikrinti apibrėžimo sritį, atsakymas turėjo būti $$ x \\in \\mathbb{R} \\setminus \\{0\\} $$"
+  },
+  {
+    "level": 5,
+    "problem": "$$ \\frac{x+1}{2x} - 1 = 0 $$",
+    "steps": [
+      "$$ \\frac{x+1 - 2x}{2x} = 0 $$ (Bendravardikliname)",
+      "$$ \\frac{x+1}{2x} $$ (Nekomentuota)",
+      "$$ x + 1 = 0 $$ (Prilyginame skaitiklį nuliui)",
+      "$$ x = -1 $$ (Išsprendžiame lygtį)",
+      "$$ 2x \\neq 0, \\; x \\neq 0 $$ (Randame apibrėžimo sritį)",
+      "$$ x = -1 $$ (Atsakymas)"
+    ],
+    "mistakeStep": 2,
+    "explanation": "Klaida 2 žingsnyje: blogai sutraukti nariai, skaitiklis turėjo būti $$ -x + 1 $$, o ne $$ x + 1 $$"
+  },
+  {
+    "level": 6,
+    "problem": "$$ \\frac{x^2 + x}{x+1} = 1 $$",
+    "steps": [
+      "$$ \\frac{x^2 + x}{x+1} - 1 = 0 $$ (Perkeliame 1 į kairę pusę)",
+      "$$ \\frac{x^2 + x - (x + 1)}{x+1} = 0 $$ (Sutvarkome skaitiklį)",
+      "$$ \\frac{x^2 + x - x - 1}{x+1} = 1 $$ (Nekomentuota)",
+      "$$ \\frac{x^2 - 1}{x+1} = 1 $$ (Supaprastiname)",
+      "$$ x^2 - 1 = 0 $$ (Prilyginame skaitiklį nuliui)",
+      "$$ x^2 = 1 $$ (Perkeliame 1 į kitą pusę)",
+      "$$ x = \\pm 1 $$ (Atsakymas)"
+    ],
+    "mistakeStep": 7,
+    "explanation": "Klaida 7 žingsnyje: pamiršta patikrinti apibrėžimo sritį. Teisingas atsakymas yra $$ x = 1 $$"
+  },
+  {
+    "level": 7,
+    "problem": "$$ \\frac{2x}{x+1} = x $$",
+    "steps": [
+      "$$ \\frac{2x}{x+1} - x = 0 $$ (Perkeliame $$ x $$ į kairę pusę)",
+      "$$ \\frac{2x - x(x+1)}{x+1} = 0 $$ (Bendravardikliname)",
+      "$$ \\frac{2x - x^2 - 1}{x+1} = 0 $$ (Nekomentuota)",
+      "$$ \\frac{-(x - 1)^2}{x+1} = 0 $$ (Išskaidome skaitiklį)",
+      "$$ -(x - 1)^2 = 0 $$ (Prilyginame skaitiklį nuliui)",
+      "$$ x - 1 = 0 $$ (Išsprendžiame)",
+      "$$ x = 1 $$ (Gauname sprendinį)",
+      "$$ x + 1 \\neq 0, \\; x \\neq -1 $$ (Randame apibrėžimo sritį)",
+      "$$ x \\in \\emptyset $$ (Atsakymas)"
+    ],
+    "mistakeStep": 8,
+    "explanation": "Klaida 8 žingsnyje: blogai apskaičiuota apibrėžimo sritis – $$ x = 1 $$ priklauso leistinai sričiai"
+  },
+  {
+    "level": 8,
+    "problem": "$$ \\frac{x^2 + 1}{x} - 2 = 0 $$",
+    "steps": [
+      "$$ \\frac{x^2 + 1 - 2x}{x} = 0 $$ (Bendravardikliname)",
+      "$$ \\frac{(x + 1)^2}{x} = 0 $$ (Perrašome skaitiklį)",
+      "$$ (x + 1)^2 = 0 $$ (Prilyginame vardiklį nuliui)",
+      "$$ x + 1 = 0 $$ (Ištraukiame šaknį)",
+      "$$ x = -1 $$ (Gauname sprendinį)",
+      "$$ x \\neq 0 $$ (Randame apibrėžimo sritį)",
+      "$$ x = -1 $$ (Atsakymas)"
+    ],
+    "mistakeStep": 2,
+    "explanation": "Klaida 2 žingsnyje: perrašius skaitiklį gauname $$ (x - 1)^2 $$, o ne $$ (x + 1)^2 $$"
+  },
+  {
+    "level": 9,
+    "problem": "$$ \\frac{x+2}{x-1} = 2 $$",
+    "steps": [
+      "$$ \\frac{x+2 - 2(x - 1)}{x - 1} = 0 $$ (Perkeliame 2 į kairę pusę, bendravardikliname)",
+      "$$ \\frac{x+2 - 2x - 2}{x - 1} = 0 $$ (Išskleidžiame)",
+      "$$ \\frac{-x}{x - 1} = 0 $$ (Supaprastiname)",
+      "$$ -x = 0 $$ (Prilyginame skaitiklį nuliui)",
+      "$$ x = 0 $$ (Gauname sprendinį)",
+      "$$ x - 1 \\neq 0, \\; x \\neq 1 $$ (Randame apibrėžimo sritį)",
+      "$$ x = 0 $$ (Atsakymas)"
+    ],
+    "mistakeStep": 2,
+    "explanation": "Klaida 2 žingsnyje: blogai atskliausta $$ -2(x - 1) $$. Turėjo būti $$ -2x + 2 $$, ne $$ -2x - 2 $$"
   }
-];
+]
+;
 
         let currentLevel = 0;
         let clickable = false;
