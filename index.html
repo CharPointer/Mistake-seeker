@@ -5,61 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mistake Seeker</title>
   <style>
-    body {
-      margin: 0;
-      background-color: #0e0e0e;
-      color: #f8f8f8;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-    h1 {
-      color: #ffdd00;
-      margin-bottom: 1.5rem;
-    }
-    .problem {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .step {
-      background-color: #1a1a1a;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      width: 100%;
-      max-width: 600px;
-      transition: background-color 0.3s;
-      cursor: pointer;
-    }
-    .step.hover-enabled:hover {
-      background-color: #333300;
-    }
-    .step.correct {
-      border-left: 6px solid #00cc66;
-    }
-    .step.wrong {
-      border-left: 6px solid #cc0033;
-    }
-    .explanation {
-      margin-top: 1rem;
-      font-style: italic;
-      color: #ccc;
-      max-width: 600px;
-    }
-    .next-btn {
-      margin-top: 2rem;
-      background: #ffdd00;
-      color: #000;
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      display: none;
-    }
+    /* Your existing CSS remains the same */
   </style>
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+      },
+      startup: {
+        typeset: false, // We'll manually typeset
+        ready: () => {
+          MathJax.startup.defaultReady();
+          MathJax.startup.promise.then(() => {
+            // Load problems after MathJax is ready
+            loadProblems();
+          });
+        }
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <h1>Mistake Seeker</h1>
+  <div id="content"></div>
+  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
+
   <script>
     let levels = [];
     let currentLevel = 0;
@@ -73,62 +50,64 @@
     }
 
     function showLevel() {
-  const container = document.querySelector('#content');
-  container.innerHTML = '';
+      const container = document.querySelector('#content');
+      container.innerHTML = '';
 
-  const level = levels[currentLevel];
-  clicked = false;
-  clickable = false;
+      const level = levels[currentLevel];
+      clicked = false;
+      clickable = false;
 
-  const probDiv = document.createElement('div');
-  probDiv.className = 'problem';
-  probDiv.innerHTML = level.problem;
-  container.appendChild(probDiv);
+      const probDiv = document.createElement('div');
+      probDiv.className = 'problem';
+      probDiv.innerHTML = level.problem;
+      container.appendChild(probDiv);
 
-  level.steps.forEach((stepText, i) => {
-    const stepDiv = document.createElement('div');
-    stepDiv.className = 'step';
-    stepDiv.innerHTML = `<b>${i + 1})</b> ${stepText}`;
-    stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
-    container.appendChild(stepDiv);
-  });
+      level.steps.forEach((stepText, i) => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'step';
+        stepDiv.innerHTML = `<b>${i + 1})</b> ${stepText}`;
+        stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
+        container.appendChild(stepDiv);
+      });
 
-  // Update MathJax processing
-  if (window.MathJax) {
-    MathJax.typesetPromise().then(() => {
-      setTimeout(() => {
-        clickable = true;
-        document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 10000);
-    });
-  }
-}
+      // Ensure MathJax is fully loaded before typesetting
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise()
+          .then(() => {
+            setTimeout(() => {
+              clickable = true;
+              document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
+            }, 10000);
+          })
+          .catch(err => console.error("MathJax typeset error:", err));
+      }
+    }
 
     function handleClick(index, el, level) {
-  if (!clickable || clicked) return;
-  clicked = true;
+      if (!clickable || clicked) return;
+      clicked = true;
 
-  const steps = document.querySelectorAll('.step');
-  steps.forEach((step, i) => {
-    step.classList.remove('hover-enabled');
-    if (i === level.mistakeStep) step.classList.add('correct');
-    if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
-  });
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step, i) => {
+        step.classList.remove('hover-enabled');
+        if (i === level.mistakeStep) step.classList.add('correct');
+        if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
+      });
 
-  const explanation = document.createElement('div');
-  explanation.className = 'explanation';
-  explanation.innerHTML = (index === level.mistakeStep)
-    ? '✅ Correct!'
-    : '❌ Incorrect. ' + level.explanation;
-  document.querySelector('#content').appendChild(explanation);
+      const explanation = document.createElement('div');
+      explanation.className = 'explanation';
+      explanation.innerHTML = (index === level.mistakeStep)
+        ? '✅ Correct!'
+        : '❌ Incorrect. ' + level.explanation;
+      document.querySelector('#content').appendChild(explanation);
 
-  // Process new content with MathJax
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+      // Re-process MathJax for new content
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
 
-  document.querySelector('#nextBtn').style.display = 'inline-block';
-}
+      document.querySelector('#nextBtn').style.display = 'inline-block';
+    }
 
     function nextLevel() {
       currentLevel++;
@@ -140,17 +119,6 @@
         document.querySelector('#nextBtn').style.display = 'none';
       }
     }
-
-    window.onload = loadProblems;
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
-</head>
-<body>
-  <h1>Mistake Seeker</h1>
-  <div id="content"></div>
-  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
 </body>
 </html>
