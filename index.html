@@ -13,17 +13,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem;
-      font-size: 1.3rem;
+      padding: 1rem;
+      font-size: 1.1rem;
     }
     h1 {
       color: #ffdd00;
-      margin-bottom: 1.5rem;
-      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      font-size: 2rem;
     }
     .problem {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
       max-width: 800px;
       text-align: center;
       white-space: pre-line;
@@ -31,13 +31,13 @@
     .step {
       background-color: #1a1a1a;
       border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      padding: 0.8rem;
+      margin-bottom: 0.8rem;
       width: 100%;
       max-width: 800px;
       transition: background-color 0.3s;
       cursor: pointer;
-      white-space: pre-line;
+      white-space: normal;
     }
     .step.hover-enabled:hover {
       background-color: #333300;
@@ -49,17 +49,17 @@
       border-left: 6px solid #cc0033;
     }
     .explanation {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       font-style: italic;
       color: #ccc;
       max-width: 800px;
       white-space: pre-line;
     }
     .next-btn {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       background: #ffdd00;
       color: #000;
-      padding: 0.8rem 1.4rem;
+      padding: 0.6rem 1.2rem;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -89,13 +89,13 @@
 
       const probDiv = document.createElement('div');
       probDiv.className = 'problem';
-      probDiv.textContent = level.problem;
+      probDiv.innerHTML = level.problem;
       container.appendChild(probDiv);
 
       level.steps.forEach((stepText, i) => {
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step';
-        stepDiv.textContent = `${i + 1}) ${stepText}`;
+        stepDiv.innerHTML = `${i + 1}) ${stepText}`;
         stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
         container.appendChild(stepDiv);
       });
@@ -121,7 +121,7 @@
 
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
-      explanation.textContent = (index === level.mistakeStep)
+      explanation.innerHTML = (index === level.mistakeStep)
         ? '✅ Teisingai!'
         : '❌ Neteisinga. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
@@ -150,9 +150,7 @@
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
       },
-      svg: {
-        fontCache: 'global'
-      }
+      svg: { fontCache: 'global' }
     };
   </script>
   <script id="MathJax-script" async
