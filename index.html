@@ -71,78 +71,109 @@
   <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
 
   <script>
-  let levels = [];
-  let currentLevel = 0;
-  let clickable = false;
-  let clicked = false;
+    const levels = [
+      {
+        problem: "Find the derivative of f(x) = x³ + 2x² - 5x + 1",
+        steps: [
+          "f'(x) = 3x² + 4x - 5",
+          "f'(x) = 3x² + 2x - 5",
+          "f'(x) = 3x² + 4x - 1",
+          "f'(x) = x² + 4x - 5"
+        ],
+        mistakeStep: 1,
+        explanation: "The derivative of 2x² is 4x, not 2x. So the correct answer is f'(x) = 3x² + 4x - 5."
+      },
+      {
+        problem: "Solve for x: (x+3)/(x-1) = 2",
+        steps: [
+          "Cross multiply: x + 3 = 2(x - 1)",
+          "Expand: x + 3 = 2x - 2",
+          "Rearrange: 3 + 2 = 2x - x",
+          "Therefore: x = 5"
+        ],
+        mistakeStep: 3,
+        explanation: "All steps are correct. The solution is indeed x = 5."
+      },
+      {
+        problem: "What is ∫x² dx?",
+        steps: [
+          "∫x² dx = x³/3 + C",
+          "∫x² dx = x³/2 + C",
+          "∫x² dx = x³ + C",
+          "∫x² dx = 2x³ + C"
+        ],
+        mistakeStep: 0,
+        explanation: "The power rule for integration: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C"
+      }
+    ];
 
-  async function loadLevels() {
-    const res = await fetch('problems.json');
-    levels = await res.json();
-    showLevel();
-  }
+    let currentLevel = 0;
+    let clickable = false;
+    let clicked = false;
 
-  function showLevel() {
-    const container = document.querySelector('#content');
-    container.innerHTML = '';
+    function showLevel() {
+      const container = document.querySelector('#content');
+      container.innerHTML = '';
 
-    const level = levels[currentLevel];
-    clicked = false;
-    clickable = false;
+      const level = levels[currentLevel];
+      clicked = false;
+      clickable = false;
 
-    const probDiv = document.createElement('div');
-    probDiv.className = 'problem';
-    probDiv.innerHTML = level.problem;
-    container.appendChild(probDiv);
+      const probDiv = document.createElement('div');
+      probDiv.className = 'problem';
+      probDiv.innerHTML = level.problem;
+      container.appendChild(probDiv);
 
-    level.steps.forEach((stepText, i) => {
-      const stepDiv = document.createElement('div');
-      stepDiv.className = 'step';
-      stepDiv.innerHTML = `<b>${i + 1})</b> ${stepText}`;
-      stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
-      container.appendChild(stepDiv);
-    });
+      level.steps.forEach((stepText, i) => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'step';
+        stepDiv.innerHTML = `<b>${i + 1})</b> ${stepText}`;
+        stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
+        container.appendChild(stepDiv);
+      });
 
-    setTimeout(() => {
-      clickable = true;
-      document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-    }, 1000);
-  }
-
-  function handleClick(index, el, level) {
-    if (!clickable || clicked) return;
-    clicked = true;
-
-    const steps = document.querySelectorAll('.step');
-    steps.forEach((step, i) => {
-      step.classList.remove('hover-enabled');
-      if (i === level.mistakeStep) step.classList.add('correct');
-      if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
-    });
-
-    const explanation = document.createElement('div');
-    explanation.className = 'explanation';
-    explanation.innerHTML = (index === level.mistakeStep)
-      ? '✅ Correct!'
-      : '❌ Incorrect. ' + level.explanation;
-    document.querySelector('#content').appendChild(explanation);
-
-    document.querySelector('#nextBtn').style.display = 'inline-block';
-  }
-
-  function nextLevel() {
-    currentLevel++;
-    if (currentLevel < levels.length) {
-      document.querySelector('#nextBtn').style.display = 'none';
-      showLevel();
-    } else {
-      document.querySelector('#content').innerHTML = '<h2>🎉 You have finished all problems!</h2>';
-      document.querySelector('#nextBtn').style.display = 'none';
+      setTimeout(() => {
+        clickable = true;
+        document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
+      }, 1000);
     }
-  }
 
-  window.onload = loadLevels;
-</script>
+    function handleClick(index, el, level) {
+      if (!clickable || clicked) return;
+      clicked = true;
 
+      const steps = document.querySelectorAll('.step');
+      steps.forEach((step, i) => {
+        step.classList.remove('hover-enabled');
+        if (i === level.mistakeStep) step.classList.add('correct');
+        if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
+      });
+
+      const explanation = document.createElement('div');
+      explanation.className = 'explanation';
+      explanation.innerHTML = (index === level.mistakeStep)
+        ? '✅ Correct!'
+        : '❌ Incorrect. ' + level.explanation;
+      document.querySelector('#content').appendChild(explanation);
+
+      document.querySelector('#nextBtn').style.display = 'inline-block';
+    }
+
+    function nextLevel() {
+      currentLevel++;
+      if (currentLevel < levels.length) {
+        document.querySelector('#nextBtn').style.display = 'none';
+        showLevel();
+      } else {
+        document.querySelector('#content').innerHTML = '<h2>🎉 You have finished all problems!</h2>';
+        document.querySelector('#nextBtn').style.display = 'none';
+      }
+    }
+
+    // Start the app
+    window.onload = function() {
+      showLevel();
+    };
+  </script>
 </body>
 </html>
