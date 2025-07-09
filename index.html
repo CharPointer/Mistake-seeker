@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mistake Seeker</title>
   <style>
     body {
@@ -14,26 +14,22 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem;
-      font-size: 1.4rem;
     }
     h1 {
       color: #ffdd00;
-      margin-bottom: 2rem;
-      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
     }
     .problem {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       margin-bottom: 2rem;
-      max-width: 700px;
-      text-align: center;
     }
     .step {
       background-color: #1a1a1a;
       border-radius: 8px;
-      padding: 1.2rem;
+      padding: 1rem;
       margin-bottom: 1rem;
       width: 100%;
-      max-width: 700px;
+      max-width: 600px;
       transition: background-color 0.3s;
       cursor: pointer;
     }
@@ -47,16 +43,16 @@
       border-left: 6px solid #cc0033;
     }
     .explanation {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       font-style: italic;
       color: #ccc;
-      max-width: 700px;
+      max-width: 600px;
     }
     .next-btn {
       margin-top: 2rem;
       background: #ffdd00;
       color: #000;
-      padding: 0.8rem 1.4rem;
+      padding: 0.7rem 1.2rem;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -64,52 +60,17 @@
       display: none;
     }
   </style>
-</head>
-<body>
-  <h1>Mistake Seeker</h1>
-  <div id="content"></div>
-  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
-
   <script>
-    const levels = [
-      {
-        problem: "Find the derivative of f(x) = x³ + 2x² - 5x + 1",
-        steps: [
-          "f'(x) = 3x² + 4x - 5",
-          "f'(x) = 3x² + 2x - 5",
-          "f'(x) = 3x² + 4x - 1",
-          "f'(x) = x² + 4x - 5"
-        ],
-        mistakeStep: 1,
-        explanation: "The derivative of 2x² is 4x, not 2x. So the correct answer is f'(x) = 3x² + 4x - 5."
-      },
-      {
-        problem: "Solve for x: (x+3)/(x-1) = 2",
-        steps: [
-          "Cross multiply: x + 3 = 2(x - 1)",
-          "Expand: x + 3 = 2x - 2",
-          "Rearrange: 3 + 2 = 2x - x",
-          "Therefore: x = 5"
-        ],
-        mistakeStep: 3,
-        explanation: "All steps are correct. The solution is indeed x = 5."
-      },
-      {
-        problem: "What is ∫x² dx?",
-        steps: [
-          "∫x² dx = x³/3 + C",
-          "∫x² dx = x³/2 + C",
-          "∫x² dx = x³ + C",
-          "∫x² dx = 2x³ + C"
-        ],
-        mistakeStep: 0,
-        explanation: "The power rule for integration: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C"
-      }
-    ];
-
+    let levels = [];
     let currentLevel = 0;
     let clickable = false;
     let clicked = false;
+
+    async function loadProblems() {
+      const res = await fetch('problems.json');
+      levels = await res.json();
+      showLevel();
+    }
 
     function showLevel() {
       const container = document.querySelector('#content');
@@ -135,7 +96,9 @@
       setTimeout(() => {
         clickable = true;
         document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 1000);
+      }, 10000); // 10s delay
+
+      MathJax.typeset(); // render LaTeX
     }
 
     function handleClick(index, el, level) {
@@ -151,7 +114,7 @@
 
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
-      explanation.innerHTML = (index === level.mistakeStep)
+      explanation.textContent = (index === level.mistakeStep)
         ? '✅ Correct!'
         : '❌ Incorrect. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
@@ -165,15 +128,21 @@
         document.querySelector('#nextBtn').style.display = 'none';
         showLevel();
       } else {
-        document.querySelector('#content').innerHTML = '<h2>🎉 You have finished all problems!</h2>';
+        document.querySelector('#content').innerHTML = '<h2>🎉 You’ve finished all problems!</h2>';
         document.querySelector('#nextBtn').style.display = 'none';
       }
     }
 
-    // Start the app
-    window.onload = function() {
-      showLevel();
-    };
+    window.onload = loadProblems;
   </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <h1>Mistake Seeker</h1>
+  <div id="content"></div>
+  <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
 </body>
 </html>
