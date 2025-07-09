@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mistake Seeker</title>
   <style>
     body {
@@ -18,26 +18,23 @@
     }
     h1 {
       color: #ffdd00;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       font-size: 2rem;
     }
     .problem {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 1.5rem;
-      max-width: 800px;
+      max-width: 700px;
       text-align: center;
-      white-space: pre-line;
     }
     .step {
       background-color: #1a1a1a;
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 0.8rem;
       margin-bottom: 0.8rem;
       width: 100%;
-      max-width: 800px;
-      transition: background-color 0.3s;
+      max-width: 700px;
       cursor: pointer;
-      white-space: normal;
     }
     .step.hover-enabled:hover {
       background-color: #333300;
@@ -52,8 +49,7 @@
       margin-top: 1rem;
       font-style: italic;
       color: #ccc;
-      max-width: 800px;
-      white-space: pre-line;
+      max-width: 700px;
     }
     .next-btn {
       margin-top: 1.5rem;
@@ -103,9 +99,8 @@
       setTimeout(() => {
         clickable = true;
         document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 10000);
-
-      if (window.MathJax) MathJax.typesetPromise();
+        MathJax.typesetPromise();
+      }, 500);
     }
 
     function handleClick(index, el, level) {
@@ -126,8 +121,7 @@
         : '❌ Neteisinga. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
 
-      if (window.MathJax) MathJax.typesetPromise();
-
+      MathJax.typesetPromise();
       document.querySelector('#nextBtn').style.display = 'inline-block';
     }
 
@@ -153,9 +147,7 @@
       svg: { fontCache: 'global' }
     };
   </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <h1>Mistake Seeker</h1>
