@@ -1,32 +1,106 @@
 [
   {
-    "problem": "Simplify: \\( (x + 2)(x - 3) \\)",
+    "level": 1,
+    "problem": "$$1. \\quad \\frac{1}{x} = 2$$",
     "steps": [
-      "Distribute \\( x \\) to \\( x \\) and \\( -3 \\): \\( x^2 - 3x \\)",
-      "Distribute \\( 2 \\) to \\( x \\) and \\( -3 \\): \\( 2x - 6 \\)",
-      "Combine like terms: \\( x^2 - x - 6 \\)"
+      "Padauginame abi lygties puses iš \\( x \\): \\( 1 = 2x \\)",
+      "Padaliname abi puses iš 2: \\( x = \\frac{1}{2} \\)"
     ],
-    "mistakeStep": 0,
-    "explanation": "You must distribute both terms of the first binomial to the second."
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas."
   },
   {
-    "problem": "Solve: \\( 2(x - 4) = 10 \\)",
+    "level": 2,
+    "problem": "$$2. \\quad \\frac{3}{x+1} = 6$$",
     "steps": [
-      "Distribute: \\( 2x - 8 = 10 \\)",
-      "Add 8 to both sides: \\( 2x = 18 \\)",
-      "Divide by 2: \\( x = 9 \\)"
+      "Padauginame abi puses iš \\( x + 1 \\): \\( 3 = 6(x + 1) \\)",
+      "Padaliname abi puses iš 6: \\( \\frac{3}{6} = x + 1 \\)",
+      "Supaprastiname: \\( \\frac{1}{2} = x + 1 \\)",
+      "Atimame 1 iš abiejų pusių: \\( x = -\\frac{1}{2} \\)"
     ],
-    "mistakeStep": 0,
-    "explanation": "You mistakenly wrote \\( 2x - 8 \\) instead of \\( 2x - 4 \\). Double-check distribution."
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas."
   },
   {
-    "problem": "Factor: \\( x^2 + 5x + 6 \\)",
+    "level": 3,
+    "problem": "$$3. \\quad \\frac{2}{x} + \\frac{3}{x+1} = 1$$",
     "steps": [
-      "Find two numbers that multiply to 6 and add to 5",
-      "Those numbers are 2 and 3",
-      "Factor as \\( (x + 2)(x + 3) \\)"
+      "Suvienodiname vardiklius: bendras vardiklis yra \\( x(x+1) \\)",
+      "Pertvarkome: \\( \\frac{2(x+1) + 3x}{x(x+1)} = 1 \\)",
+      "Skaitiklyje gauname: \\( 2x + 2 + 3x = 5x + 2 \\)",
+      "Lygtis tampa: \\( \\frac{5x + 2}{x(x+1)} = 1 \\)",
+      "Padauginame abi puses iš \\( x(x+1) \\): \\( 5x + 2 = x^2 + x \\)",
+      "Perkeliame viską į vieną pusę: \\( 0 = x^2 - 4x - 2 \\)",
+      "Sprendžiame kvadratinę lygtį: \\( x = \\frac{4 \\pm \\sqrt{(16 + 8)}}{2} = \\frac{4 \\pm \\sqrt{24}}{2} = \\frac{4 \\pm 2\\sqrt{6}}{2} = 2 \\pm \\sqrt{6} \\)"
     ],
-    "mistakeStep": 2,
-    "explanation": "You factored incorrectly — double check your signs and product-sum relationship."
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas."
+  },
+  {
+    "level": 4,
+    "problem": "$$4. \\quad \\frac{3x}{x-2} = 6$$",
+    "steps": [
+      "Padauginame abi puses iš \\( x - 2 \\): \\( 3x = 6(x - 2) \\)",
+      "Išskleidžiame: \\( 3x = 6x - 12 \\)",
+      "Perkeliame viską į vieną pusę: \\( -3x = -12 \\)",
+      "Padaliname iš -3: \\( x = 4 \\)"
+    ],
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas."
+  },
+  {
+    "level": 5,
+    "problem": "$$5. \\quad \\frac{2x+1}{x-1} = \\frac{4}{x+2}$$",
+    "steps": [
+      "Kryžminis dauginimas: \\( (2x + 1)(x + 2) = 4(x - 1) \\)",
+      "Išskleidžiame: \\( 2x^2 + 4x + x + 2 = 4x - 4 \\)",
+      "Supaprastiname: \\( 2x^2 + 5x + 2 = 4x - 4 \\)",
+      "Perkeliame viską į vieną pusę: \\( 2x^2 + x + 6 = 0 \\)",
+      "Sprendžiame kvadratinę lygtį: \\( x = \\frac{-1 \\pm \\sqrt{1^2 - 4 \\cdot 2 \\cdot 6}}{2 \\cdot 2} = \\frac{-1 \\pm \\sqrt{-47}}{4} \\)",
+      "Sprendinių nėra — šaknys yra kompleksinės"
+    ],
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas — realių sprendinių nėra."
+  },
+  {
+    "level": 6,
+    "problem": "$$6. \\quad \\frac{x+2}{x^2-4} = \\frac{1}{x-2}$$",
+    "steps": [
+      "Sunaikiname vardiklius: \\( x^2 - 4 = (x - 2)(x + 2) \\)",
+      "Lygtis tampa: \\( \\frac{x+2}{(x - 2)(x + 2)} = \\frac{1}{x - 2} \\)",
+      "Sutrumpiname \\( x + 2 \\), liko: \\( \\frac{1}{x - 2} = \\frac{1}{x - 2} \\)",
+      "Tai yra tapatybė — visos reikšmės tinkamos išskyrus \\( x = \\pm 2 \\)"
+    ],
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas."
+  },
+  {
+    "level": 7,
+    "problem": "$$7. \\quad \\frac{1}{x} + \\frac{2}{x+1} = \\frac{3}{x^2+x}$$",
+    "steps": [
+      "Pastebime, kad \\( x^2 + x = x(x+1) \\)",
+      "Bendras vardiklis kairėje taip pat yra \\( x(x+1) \\)",
+      "Suvienodiname vardiklius: \\( \\frac{(x+1) + 2x}{x(x+1)} = \\frac{3x + 1}{x(x+1)} \\)",
+      "Tai nelygu dešinei pusei, taigi tikriname pradinę lygtį",
+      "Teisinga būtų: \\( \\frac{1}{x} + \\frac{2}{x+1} = \\frac{(x+1 + 2x)}{x(x+1)} = \\frac{3x + 1}{x(x+1)} \\)",
+      "Bet dešinėje turime \\( \\frac{3}{x^2+x} = \\frac{3}{x(x+1)} \\)",
+      "Lygybė neteisinga, nebent \\( 3x + 1 = 3 \\), tuomet \\( x = \\frac{2}{3} \\)"
+    ],
+    "mistakeStep": -1,
+    "explanation": "Sprendimas yra teisingas — randame, kad \\( x = \\frac{2}{3} \\)"
+  },
+  {
+    "level": 8,
+    "problem": "$$8. \\quad \\frac{2}{x+3} + \\frac{1}{x-3} = \\frac{5x}{x^2-9}$$",
+    "steps": [
+      "Pastebime, kad \\( x^2 - 9 = (x + 3)(x - 3) \\)",
+      "Suvienodiname kairės pusės vardiklius: \\( \\frac{2(x - 3) + 1(x + 3)}{(x + 3)(x - 3)} \\)",
+      "Skaitiklyje: \\( 2x - 6 + x + 3 = 3x - 3 \\)",
+      "Gautas reiškinys: \\( \\frac{3x - 3}{x^2 - 9} \\)",
+      "Tikriname ar lygu dešinei pusei: \\( \\frac{5x}{x^2 - 9} \\)? Ne, nes skaitikliai skirtingi",
+      "Taigi originali lygtis neteisinga — bet jei vietoje 5x būtų \\( 3x - 3 \\), tai būtų lygybė"
+    ],
+    "mistakeStep": -1,
+    "explanation": "Sprendimas parodo, kad lygybė įvyksta tik jei dešinėje skaitiklis yra \\( 3x - 3 \\), o ne \\( 5x \\)"
   }
 ]
