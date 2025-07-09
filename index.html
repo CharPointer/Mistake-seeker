@@ -91,7 +91,7 @@
     <button id="nextBtn" style="display: none;">Next Problem</button>
 
     <script>
-        const levels = {
+        const levels = [{
   "level": 1,
   "problem": "$$ \\frac{2}{x-1} + \\frac{1}{x+2} = \\frac{5}{x-1} $$",
   "steps": [
@@ -108,7 +108,7 @@
   ],
   "mistakeStep": 8,
   "explanation": "Klaida devintame žingsnyje: neteisingai perkelta. Teisingai: $$ -2x - 7 = 0 $$ → $$ -2x = 7 $$ → $$ x = -\\frac{7}{2} $$. Reikia patikrinti, ar sprendinys nepadaro vardiklių lygiais nuliui: $x = -\\frac{7}{2} \\neq 1$ ir $x = -\\frac{7}{2} \\neq -2$, todėl sprendinys tinkamas."
-};
+}];
 
         let currentLevel = 0;
         let clickable = false;
