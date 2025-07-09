@@ -63,12 +63,36 @@
       cursor: pointer;
       display: none;
     }
+    .loading {
+      text-align: center;
+      color: #ffdd00;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
 <body>
   <h1>Mistake Seeker</h1>
-  <div id="content"></div>
+  <div id="content">
+    <div class="loading">Loading problems...</div>
+  </div>
   <button id="nextBtn" class="next-btn" onclick="nextLevel()">Next</button>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <script>
     let levels = [];
@@ -83,16 +107,33 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         levels = await response.json();
-        showLevel();
+        
+        // Wait for MathJax to be ready
+        if (window.MathJax) {
+          MathJax.startup.promise.then(() => {
+            showLevel();
+          });
+        } else {
+          // Fallback if MathJax isn't loaded
+          setTimeout(() => {
+            showLevel();
+          }, 2000);
+        }
       } catch (error) {
         console.error('Error loading problems:', error);
-        document.querySelector('#content').innerHTML = '<p>Error loading problems. Please check that problems.json exists and is valid.</p>';
+        document.querySelector('#content').innerHTML = '<p>Error loading problems. Please check that problems.json exists and is valid JSON.</p>';
       }
     }
 
     function showLevel() {
       const container = document.querySelector('#content');
       container.innerHTML = '';
+
+      if (currentLevel >= levels.length) {
+        container.innerHTML = '<h2>🎉 You have finished all problems!</h2>';
+        document.querySelector('#nextBtn').style.display = 'none';
+        return;
+      }
 
       const level = levels[currentLevel];
       clicked = false;
@@ -111,10 +152,20 @@
         container.appendChild(stepDiv);
       });
 
-      setTimeout(() => {
-        clickable = true;
-        document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
-      }, 1000);
+      // Re-render MathJax after adding new content
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([container]).then(() => {
+          setTimeout(() => {
+            clickable = true;
+            document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
+          }, 1000);
+        });
+      } else {
+        setTimeout(() => {
+          clickable = true;
+          document.querySelectorAll('.step').forEach(div => div.classList.add('hover-enabled'));
+        }, 2000);
+      }
     }
 
     function handleClick(index, el, level) {
@@ -124,29 +175,36 @@
       const steps = document.querySelectorAll('.step');
       steps.forEach((step, i) => {
         step.classList.remove('hover-enabled');
-        if (i === level.mistakeStep) step.classList.add('correct');
-        if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
+        if (level.mistakeStep !== null) {
+          if (i === level.mistakeStep) step.classList.add('correct');
+          if (i === index && i !== level.mistakeStep) step.classList.add('wrong');
+        }
       });
 
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
-      explanation.innerHTML = (index === level.mistakeStep)
-        ? '✅ Correct!'
-        : '❌ Incorrect. ' + level.explanation;
+      
+      if (level.mistakeStep === null) {
+        explanation.innerHTML = '✅ ' + level.explanation;
+      } else {
+        explanation.innerHTML = (index === level.mistakeStep)
+          ? '✅ Correct!'
+          : '❌ Incorrect. ' + level.explanation;
+      }
+      
       document.querySelector('#content').appendChild(explanation);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([explanation]);
+      }
 
       document.querySelector('#nextBtn').style.display = 'inline-block';
     }
 
     function nextLevel() {
       currentLevel++;
-      if (currentLevel < levels.length) {
-        document.querySelector('#nextBtn').style.display = 'none';
-        showLevel();
-      } else {
-        document.querySelector('#content').innerHTML = '<h2>🎉 You have finished all problems!</h2>';
-        document.querySelector('#nextBtn').style.display = 'none';
-      }
+      document.querySelector('#nextBtn').style.display = 'none';
+      showLevel();
     }
 
     // Start the app
