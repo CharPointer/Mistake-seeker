@@ -14,28 +14,30 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
     }
     h1 {
       color: #ffdd00;
-      margin-bottom: 2rem;
-      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      font-size: 2.4rem;
     }
     .problem {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       margin-bottom: 2rem;
       max-width: 800px;
       text-align: center;
+      white-space: pre-line;
     }
     .step {
       background-color: #1a1a1a;
       border-radius: 8px;
-      padding: 1.4rem;
-      margin-bottom: 1.2rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
       width: 100%;
       max-width: 800px;
       transition: background-color 0.3s;
       cursor: pointer;
+      white-space: pre-line;
     }
     .step.hover-enabled:hover {
       background-color: #333300;
@@ -47,16 +49,17 @@
       border-left: 6px solid #cc0033;
     }
     .explanation {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       font-style: italic;
       color: #ccc;
       max-width: 800px;
+      white-space: pre-line;
     }
     .next-btn {
-      margin-top: 2.5rem;
+      margin-top: 2rem;
       background: #ffdd00;
       color: #000;
-      padding: 1rem 1.6rem;
+      padding: 0.8rem 1.4rem;
       border: none;
       border-radius: 6px;
       font-weight: bold;
@@ -86,13 +89,13 @@
 
       const probDiv = document.createElement('div');
       probDiv.className = 'problem';
-      probDiv.innerHTML = `$$${level.problem}$$`;
+      probDiv.textContent = level.problem;
       container.appendChild(probDiv);
 
       level.steps.forEach((stepText, i) => {
         const stepDiv = document.createElement('div');
         stepDiv.className = 'step';
-        stepDiv.innerHTML = `<b>${i + 1})</b> $$${stepText}$$`;
+        stepDiv.textContent = `${i + 1}) ${stepText}`;
         stepDiv.addEventListener('click', () => handleClick(i, stepDiv, level));
         container.appendChild(stepDiv);
       });
@@ -118,7 +121,7 @@
 
       const explanation = document.createElement('div');
       explanation.className = 'explanation';
-      explanation.innerHTML = (index === level.mistakeStep)
+      explanation.textContent = (index === level.mistakeStep)
         ? '✅ Teisingai!'
         : '❌ Neteisinga. ' + level.explanation;
       document.querySelector('#content').appendChild(explanation);
